@@ -149,4 +149,4 @@ Taxa de falta: 33.33%
 
 ## Autor
 
-Matheus Stoco
+Lucas Vaz
