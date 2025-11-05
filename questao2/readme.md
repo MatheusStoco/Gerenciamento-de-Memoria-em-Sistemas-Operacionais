@@ -1,70 +1,63 @@
-# Questão 2 - Fragmentação de Memória
+# Questão 2 - Simulação de Fragmentação de Memória (Matheus)
 
-## Parte A - Teórica
+## Descrição
 
-- Fragmentação externa: ocorre quando há espaços livres na memória, mas eles estão divididos em blocos pequenos e separados, não sendo possível alocar um processo maior mesmo havendo espaço total suficiente.
-- Fragmentação interna: ocorre quando um processo é colocado em uma partição maior do que o necessário, desperdiçando espaço dentro da partição.
+Este projeto simula a alocação de memória em partições fixas, demonstrando como ocorre fragmentação interna durante o processo de alocação. A memória é dividida em tamanhos predeterminados e os processos são alocados utilizando o algoritmo First-Fit.
 
-Exemplos:
+## Conceito de Fragmentação de Memória
 
-- Fragmentação externa: blocos livres de 50, 70 e 80, e um processo de 150 não cabe.
-- Fragmentação interna: processo de 150 colocado em uma partição de 200 (sobra 50).
+A fragmentação é um problema comum na alocação dinâmica de memória em sistemas operacionais. Conforme os blocos de memória são constantemente alocados e liberados, a memória pode se fragmentar, dificultando o uso eficiente do espaço disponível.
 
----
+- Fragmentação Externa:
+  Ocorre quando há memória livre total suficiente, porém ela está dividida em pequenos blocos separados. Mesmo existindo espaço livre no total, ele não está em um único bloco contíguo, impedindo a alocação de processos maiores. Uma possível solução é a compactação, que reorganiza os blocos livres, mas este processo é custoso e exige tempo de processamento.
 
-## Parte B - Programa em Python
+- Fragmentação Interna:
+  Acontece em sistemas que utilizam partições fixas. Quando um processo ocupa uma partição maior do que o necessário, o espaço restante dentro dessa partição é desperdiçado. Esse espaço sobrando é considerado fragmentação interna.
 
-- O programa simula um gerenciador de memória com partições fixas.
-- Usa o método First-Fit (primeira partição livre que comporta o processo).
-- Mostra a fragmentação interna e o estado atual da memória.
+## Estrutura da Memória Simulada
 
----
+A memória foi dividida em 5 partições fixas:
 
-## Instruções para executar
+- Partição 1: 100 unidades
+- Partição 2: 150 unidades
+- Partição 3: 200 unidades
+- Partição 4: 250 unidades
+- Partição 5: 300 unidades
 
-1. Instalar o Python
+Cada partição pode estar livre ou ocupada por um processo.
 
-   - Baixar e instalar em https://www.python.org/downloads
-   - Durante a instalação, marcar a opção "Add Python to PATH"
+## Funcionalidades do Programa
 
-2. Baixar ou clonar o repositório
+- `alocar_processo(nome, tamanho)`:
+  Procura a primeira partição livre que comporte o processo (algoritmo First-Fit). Caso alocado, mostra a fragmentação interna da partição.
 
-   - Exemplo:
-     ```bash
-     git clone <url-do-repositorio>
-     ```
+- `liberar_processo(nome)`:
+  Libera a partição ocupada pelo processo informado.
 
-3. Abrir o projeto no VS Code
+- `exibir_memoria()`:
+  Mostra o estado atual das partições (livres ou ocupadas).
 
-4. Abrir o terminal no VS Code
+- `fragmentacao_total()`:
+  Calcula e exibe a soma total da fragmentação interna existente nas partições ocupadas.
 
-   - Menu superior: Terminal → Novo Terminal
+## Execução
 
-5. Entrar na pasta da questão
+### Requisitos
 
-   ```bash
-   cd "Questão 2 - Simulação de Fragmentação de Memória (Matheus)"
+- Python instalado
 
-   ```
+### Como executar
 
-6. Executar o programa
+Abra o terminal na pasta do projeto:
 
-   python questao2.py
+cd questao2
 
-7. O terminal mostrará as alocações, liberações e o total de fragmentação.
+Execute o programa:
 
-## Sequência de Teste
+python questao2.py
 
-Alocar P1 (90)
+Se necessário, substitua por:
 
-Alocar P2 (140)
+## Arquivo Principal
 
-Alocar P3 (180)
-
-Liberar P2
-
-Alocar P4 (100)
-
-Tentar alocar P5 (350)
-
-Mostrar memória e fragmentação total
+- `questao2.py` — contém toda a implementação da simulação.
