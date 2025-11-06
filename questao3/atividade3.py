@@ -1,62 +1,53 @@
 # Questão 3 - Simulação do Algoritmo FIFO de Substituição de Página
-# Autor: Matheus Stoco
+# Autor: Lucas Vaz
 
-
+# ========================================================================
+# BLOCO 1: DEFINIÇÃO E INICIALIZAÇÃO DA CLASSE FIFO
+# ========================================================================
+# Implementa o algoritmo FIFO (First In First Out) para simular
+# substituição de páginas em memória virtual
 class FIFOPageReplacement:
-    """
-    Simula o algoritmo FIFO (First In First Out) de substituição de página.
-    Este algoritmo substitui a página mais antiga quando não há frames livres.
-    """
     
     def __init__(self, num_frames):
-        """
-        Inicializa o simulador FIFO.
-        
-        Args:
-            num_frames (int): Número de frames (quadros) disponíveis na memória
-        """
+        # Armazena o número de frames disponíveis na memória
         self.num_frames = num_frames
-        self.frames = []  # Lista que armazena as páginas nos frames
+        # Lista que mantém as páginas carregadas nos frames
+        self.frames = []
+        # Contadores para estatísticas de desempenho
         self.page_faults = 0
         self.page_hits = 0
-        self.referencias = []  # Histórico de referências
+        # Histórico de todas as referências processadas
+        self.referencias = []
     
     def processar_referencia(self, pagina):
-        """
-        Processa uma referência a uma página.
-        
-        Args:
-            pagina (int): Número da página sendo referenciada
-            
-        Returns:
-            tuple: (é_page_fault, página_substituída ou None)
-        """
+        # ========================================================================
+        # BLOCO 2: PROCESSAMENTO DE REFERÊNCIAS E SUBSTITUIÇÃO FIFO
+        # ========================================================================
         # Verifica se a página já está nos frames (Page Hit)
         if pagina in self.frames:
             self.page_hits += 1
             return False, None
         
-        # Page Fault: página não está nos frames
+        # Página não está na memória, incrementa contador de faltas
         self.page_faults += 1
         pagina_substituida = None
         
-        # Se há frames livres, adiciona a página
+        # Se há espaço livre, simplesmente adiciona a página
         if len(self.frames) < self.num_frames:
             self.frames.append(pagina)
         else:
-            # Não há frames livres: remove a primeira (FIFO) e adiciona a nova
+            # Frames cheios: remove a primeira página (mais antiga)
+            # e adiciona a nova página (Algoritmo FIFO)
             pagina_substituida = self.frames.pop(0)
             self.frames.append(pagina)
         
         return True, pagina_substituida
     
     def simular(self, sequencia_paginas):
-        """
-        Executa a simulação do algoritmo FIFO.
-        
-        Args:
-            sequencia_paginas (list): Lista de números de página a referenciar
-        """
+        # ========================================================================
+        # BLOCO 3: SIMULAÇÃO E EXIBIÇÃO DOS RESULTADOS
+        # ========================================================================
+        # Exibe cabeçalho com informações iniciais da simulação
         print("=" * 80)
         print("SIMULAÇÃO DO ALGORITMO FIFO DE SUBSTITUIÇÃO DE PÁGINA")
         print("=" * 80)
@@ -65,12 +56,13 @@ class FIFOPageReplacement:
         print("=" * 80)
         print()
         
+        # Armazena a sequência e processa cada referência de página
         self.referencias = sequencia_paginas
         
         for i, pagina in enumerate(sequencia_paginas):
+            # Processa a referência e formata a saída de cada etapa
             eh_page_fault, pagina_substituida = self.processar_referencia(pagina)
             
-            # Formata a saída
             tipo_evento = "Page Hit" if not eh_page_fault else "Page Fault"
             
             if eh_page_fault and pagina_substituida is not None:
@@ -85,12 +77,16 @@ class FIFOPageReplacement:
         self._exibir_estatisticas()
     
     def _exibir_estatisticas(self):
-        """Exibe as estatísticas finais da simulação."""
+        # ========================================================================
+        # BLOCO 3 (CONTINUAÇÃO): CÁLCULO E EXIBIÇÃO DE ESTATÍSTICAS
+        # ========================================================================
+        # Calcula estatísticas de desempenho da simulação
         total_referencias = len(self.referencias)
         total_eventos = self.page_faults + self.page_hits
         taxa_falta = (self.page_faults / total_referencias * 100) if total_referencias > 0 else 0
         taxa_acerto = (self.page_hits / total_referencias * 100) if total_referencias > 0 else 0
         
+        # Exibe os resultados finais e métricas de desempenho
         print("=" * 80)
         print("ESTATÍSTICAS FINAIS")
         print("=" * 80)
@@ -103,12 +99,14 @@ class FIFOPageReplacement:
 
 
 def main():
-    """Função principal que executa o programa."""
     
-    # Entrada do usuário
+    # ========================================================================
+    # BLOCO 4: ENTRADA DE DADOS DO USUÁRIO
+    # ========================================================================
+    # Interface interativa para obter número de frames
     print("\n>>> SIMULADOR FIFO DE SUBSTITUIÇÃO DE PÁGINA <<<\n")
     
-    # Solicita o número de frames
+    # Valida e obtém o número de frames (deve ser positivo)
     while True:
         try:
             num_frames = int(input("Digite o número de frames disponíveis: "))
@@ -119,7 +117,7 @@ def main():
         except ValueError:
             print("Entrada inválida. Digite um número inteiro positivo.")
     
-    # Solicita a sequência de referências
+    # Solicita e valida a sequência de referências de páginas
     print("\nDigite a sequência de referências a páginas.")
     print("Separe os números por vírgula ou espaço.")
     print("Exemplo: 7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 2")
@@ -142,17 +140,21 @@ def main():
     
     print()
     
-    # Cria e executa o simulador
+    # ========================================================================
+    # BLOCO 5: EXECUÇÃO DA SIMULAÇÃO E CONTROLE DE REPETIÇÃO
+    # ========================================================================
+    # Cria instância do simulador e executa com os dados fornecidos
     simulador = FIFOPageReplacement(num_frames)
     simulador.simular(sequencia)
     
-    # Opção de executar novamente
+    # Permite ao usuário executar nova simulação
     print()
     while True:
         novamente = input("Deseja executar novamente? (s/n): ").lower().strip()
         if novamente in ['s', 'n']:
             break
     
+    # Se usuário desejar, chama main() recursivamente
     if novamente == 's':
         main()
     else:
