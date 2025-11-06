@@ -191,6 +191,32 @@ class LRUPageReplacement:
 # ========================================================================
 # BLOCO 3: FUNÇÕES DE VISUALIZAÇÃO E ANÁLISE
 # ========================================================================
+def exibir_simulacao_detalhada(stats, mostrar_timestamps=False):
+    """Exibe o passo a passo da simulação"""
+    print("\n" + "=" * 90)
+    print(f"SIMULAÇÃO DETALHADA - ALGORITMO {stats['algoritmo']}")
+    print("=" * 90)
+    
+    for i, evento in enumerate(stats['historico']):
+        frames_str = str(evento['frames'])
+        tipo = evento['tipo']
+        
+        if tipo == 'Fault' and evento['substituida']:
+            tipo_str = f"Page Fault (substituiu {evento['substituida']})"
+        else:
+            tipo_str = f"Page {tipo}"
+        
+        print(f"Ref {i+1}: Página {evento['pagina']:2d} | "
+              f"Frames: {frames_str:25s} | {tipo_str:35s}")
+        
+        # Exibe timestamps do LRU se solicitado
+        if mostrar_timestamps and 'timestamps' in evento and stats['algoritmo'] == 'LRU':
+            ts_str = ', '.join([f"P{p}:t{t}" for p, t in sorted(evento['timestamps'].items())])
+            print(f"         Timestamps: {ts_str}")
+    
+    print("=" * 90)
+
+
 def exibir_estatisticas(stats):
     """Exibe estatísticas de uma simulação"""
     print(f"\n{'=' * 70}")
