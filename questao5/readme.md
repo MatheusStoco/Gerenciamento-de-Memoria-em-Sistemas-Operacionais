@@ -21,20 +21,22 @@ Padrão: 1000000 (1 milhão)
 NUM_RUNS: Define o número de rodadas de teste que serão executadas para o cálculo da média.
 Padrão: 50
 
-🚀 Instruções para Executar
-Este programa foi compilado e testado em um ambiente macOS (Apple Clang / GCC).
+> 🚀 Instruções para Executar:
+
+> Este programa foi compilado e testado em um ambiente macOS (Apple Clang / GCC).
 
 > Navegue até a pasta: Abra seu terminal e certifique-se de que você está no diretório correto (provavelmente questao5).
 > Compile o programa: Use o gcc (ou clang) para compilar o arquivo .c e gerar um arquivo executável.
 
-Bash
-gcc mem_test.c -o mem_test
-gcc: O comando do compilador.
-mem_test.c: O arquivo-fonte.
+> Bash
+> gcc mem_test.c -o mem_test
+> gcc: O comando do compilador.
+> mem_test.c: O arquivo-fonte.
 
--o mem_test: O nome do arquivo executável de saída (output).
+> -o mem_test: O nome do arquivo executável de saída (output).
 
-Execute o programa: Após a compilação, execute o programa recém-criado.
+> Execute o programa: Após a compilação, execute o programa recém-criado.
 
-Bash
-./mem_test
+> Bash
+> ./mem_test
+
