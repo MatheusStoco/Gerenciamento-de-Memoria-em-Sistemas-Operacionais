@@ -6,6 +6,9 @@
 # ========================================================================
 # Implementa o algoritmo FIFO (First In First Out) para simular
 # substituição de páginas em memória virtual
+
+# add comentario commit
+
 class FIFOPageReplacement:
     
     def __init__(self, num_frames):
